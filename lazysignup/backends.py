@@ -7,7 +7,7 @@ class LazySignupBackend(ModelBackend):
     def authenticate(self, username=None):
         user_class = LazyUser.get_user_class()
         try:
-            return user_class.objects.get(username=username)
+            return user_class.objects.get(email=username)
         except user_class.DoesNotExist:
             return None
 

@@ -15,7 +15,7 @@ USER_AGENT_BLACKLIST = []
 def allow_lazy_user(func):
     def wrapped(request, *args, **kwargs):
         assert hasattr(request, 'session'), ("You need to have the session "
-                                             "app intsalled")
+                                             "app installed")
         if getattr(settings, 'LAZYSIGNUP_ENABLE', True):
             # If the user agent is one we ignore, bail early
             ignore = False
@@ -33,7 +33,7 @@ def allow_lazy_user(func):
                 from lazysignup.models import LazyUser
                 user, username = LazyUser.objects.create_lazy_user()
                 request.user = None
-                user = authenticate(username=username)
+                user = authenticate(email=username)
                 assert user, ("Lazy user creation and authentication "
                               "failed. Have you got "
                               "lazysignup.backends.LazySignupBackend in "

@@ -12,6 +12,7 @@ from lazysignup.decorators import USER_AGENT_BLACKLIST
 from lazysignup.exceptions import NotLazyError
 from lazysignup.utils import is_lazy_user
 from lazysignup.signals import converted
+from emailusernames.utils import create_user
 
 DEFAULT_BLACKLIST = (
     'slurp',
@@ -36,7 +37,7 @@ class LazyUserManager(models.Manager):
         """
         user_class = self.model.get_user_class()
         username = self.generate_username(user_class)
-        user = user_class.objects.create_user(username, '')
+        user = create_user(username, '')
         self.create(user=user)
         return user, username
 
@@ -68,9 +69,8 @@ class LazyUserManager(models.Manager):
         if m:
             return m()
         else:
-            max_length = user_class._meta.get_field(
-                self.username_field).max_length
-            return uuid.uuid4().hex[:max_length]
+            max_length = 74
+            return uuid.uuid4().hex[:max_length-10]+'@lazy.user'
 
 
 class LazyUser(models.Model):
