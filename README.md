@@ -8,3 +8,6 @@ they can convert their temporary user account to a real user account.
 `Read the full documentation`_.
 
 .. _Read the full documentation: http://django-lazysignup.readthedocs.org/
+
+Note: this fork has been customised to allow it to operate with django-email-as-username 
+with minimal hassle. Best to use original project unless you need the functionality I did.
